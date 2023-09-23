@@ -1,0 +1,9 @@
+- []  Error Handling
+- []  Security
+- []  Naming Conventions
+- []  Dry Principle
+- []  Validation
+- []  Comments
+- []  Test
+- []  Logging
+- []  Version Control
