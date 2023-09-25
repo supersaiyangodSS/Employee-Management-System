@@ -27,6 +27,7 @@ app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 
 
+app.use(express.static('public'));
 app.set('views', viewsPath);
 app.use('/sign-in', loginRouter);
 app.use('/sign-up', registerRouter);
@@ -35,7 +36,7 @@ app.use(( req : Request , res : Response , next : NextFunction) => {
     logger.info(`Request received ${req.method} ${req.url}`);
     console.log(`Request received ${req.method} ${req.url}`);
     next();
-})
+});
 
 app.get("/", ( req : Request, res : Response ) => {
     res.render('home', {
