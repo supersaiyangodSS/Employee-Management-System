@@ -10,7 +10,7 @@ import { validationResult } from "express-validator";
     }
     try {
         const user = await User.findOne({ email });
-        if (user) {
+       if (user) {
             return res.status(409).json({
                 conflict: `${email} already exists!`
             });

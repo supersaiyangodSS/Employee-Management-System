@@ -10,7 +10,6 @@ import { join , dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { randomBytes } from 'crypto';
 import session from 'express-session';
-import { ResultWithContextImpl } from 'express-validator/src/chain/context-runner-impl.js';
 connectDB();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -28,7 +27,7 @@ const hbs = create({
     layoutsDir: layoutPath,
     partialsDir: partialsPath,
 });
-app.engine('hbs', hbs.engine)
+app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 
 app.use(
@@ -44,7 +43,6 @@ app.use(express.static('public'));
 app.set('views', viewsPath);
 app.use('/sign-in', loginRouter);
 app.use('/sign-up', registerRouter);
-
 app.use(( req : Request , res : Response , next : NextFunction) => {
     logger.info(`Request received ${req.method} ${req.url}`);
     console.log(`Request received ${req.method} ${req.url}`);
@@ -66,4 +64,4 @@ app.get("/", ( req : Request, res : Response ) => {
     });
 });
 
-export default app;
+export { app, checkAuth };
