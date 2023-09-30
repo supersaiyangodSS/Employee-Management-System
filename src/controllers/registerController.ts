@@ -1,6 +1,33 @@
 import { Request, Response } from "express";
 import User from '../models/User.js';
 import { validationResult } from "express-validator";
+import { hash, compare } from 'bcrypt';
+import nodemailer from 'nodemailer';
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'vedantsapalkar99@gmail.com',
+        pass: 'kprx vfgn vapl kgjb'
+    }
+});
+const saltRound : number = 10;
+
+async function sendRegistrationMail(email: string) {
+    const mailOptions = {
+        from: 'vedantsapalkar99@gmail.com',
+        to: email,
+        subject: 'Test Subject',
+        text: 'Test text'
+    };
+
+    try {
+        await transporter.sendMail(mailOptions);
+        return 'Email sent successfully!'
+    } catch (error) {
+        console.error('Error sending email:', error);
+    }
+}
 
  const addUser = async ( req : Request, res : Response ) => {
     const errors = validationResult(req);
@@ -15,8 +42,24 @@ import { validationResult } from "express-validator";
                 conflict: `${email} already exists!`
             });
         }
+        try {
+            await sendRegistrationMail(email);
+            console.log('Email sent successfully');
+            
+        } catch (error) {
+            console.error(error)
+            return res.status(500).json({ error: 'Failed to send email'});
+        }
+        const hashedPassword = await hash(password, saltRound);
+        const newUser = new User({
+            firstName,
+            lastName,
+            email,
+            password: hashedPassword
+        });
+        await newUser.save();
         res.status(200).json({
-            noUser: `no user with the email: ${email}`,
+            newUser: `user created successfully: ${firstName} ${lastName} ${email}`,
         })
     } catch (error) {
         res.status(500).json({error: 'Internal Server Error!'});

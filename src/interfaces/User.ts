@@ -6,6 +6,7 @@ export interface IUser extends Document {
     email: string,
     password: string,
     role: string,
+    verified: boolean,
     created_at: Date,
     updated_at: Date,
 }

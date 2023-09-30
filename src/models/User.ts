@@ -23,6 +23,10 @@ const userSchema = new Schema<IUser>({
         enum: ["admin", "user"],
         default: "user",
     },
+    verified: {
+        type: Boolean,
+        default: false
+    },
     created_at: {
         type: Date,
         default: Date.now,
