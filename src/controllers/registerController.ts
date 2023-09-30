@@ -29,7 +29,7 @@ async function sendRegistrationMail(email: string) {
     }
 }
 
- const addUser = async ( req : Request, res : Response ) => {
+const addUser = async ( req : Request, res : Response ) => {
     const errors = validationResult(req);
     const { firstName, lastName, email, password } = req.body;
     if (!errors.isEmpty()) {
