@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { IUser } from "../interfaces/User.js"
+import { IUser } from "../interfaces/UserInterface.js"
 
 const userSchema = new Schema<IUser>({
     firstName: {
@@ -24,6 +24,14 @@ const userSchema = new Schema<IUser>({
         default: "user",
     },
     verified: {
+        type: Boolean,
+        default: false
+    },
+    token: {
+        type: String,
+        required: true,
+    },
+    isTokenUsed: {
         type: Boolean,
         default: false
     },

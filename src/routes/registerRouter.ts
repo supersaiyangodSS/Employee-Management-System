@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { addUser } from '../controllers/registerController.js';
+import { addUser, verifyUser } from '../controllers/registerController.js';
 import { body } from 'express-validator';
 
 const router = Router();
@@ -19,5 +19,7 @@ const validateFullUser = [
 
 router.route('/')
 .post(validateFullUser, addUser)
+
+router.get('/verify', verifyUser);
 
 export default router;
